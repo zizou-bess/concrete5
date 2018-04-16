@@ -4258,6 +4258,19 @@
     </index>
   </table>
 
+  <table name="FileFolderStorageLocation">
+    <field name="folderID" type="integer" size="11">
+      <unsigned/>
+      <key/>
+    </field>
+    <field name="storageLocationID" type="integer" size="11">
+      <unsigned/>
+    </field>
+    <index name="folderID">
+      <col>folderID</col>
+    </index>
+  </table>
+
   <table name="TreeNodePermissionAssignments">
     <field name="treeNodeID" type="integer" size="10">
       <unsigned/>
