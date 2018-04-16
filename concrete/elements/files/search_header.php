@@ -44,6 +44,10 @@
                 <?=$form->label('folderName', t('Folder Name'))?>
                 <?=$form->text('folderName', '', array('autofocus' => true))?>
             </div>
+            <div class="form-group">
+                <?=$form->label('storageLocation', t('Storage Location'))?>
+                <?=$form->select('storageLocation', $storageLocations, $currentStorageLocation)?>
+            </div>
         </form>
         <div class="dialog-buttons">
             <button class="btn btn-default pull-left" data-dialog-action="cancel"><?=t('Cancel')?></button>

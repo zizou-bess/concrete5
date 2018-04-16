@@ -1,6 +1,8 @@
 <?php
+
 namespace Concrete\Core\Tree\Node\Type;
 
+use Concrete\Core\Entity\File\StorageLocation\StorageLocation;
 use Concrete\Core\File\FolderItemList;
 use Concrete\Core\File\Search\ColumnSet\FolderSet;
 use Concrete\Core\Tree\Node\Node as TreeNode;
@@ -11,6 +13,7 @@ use Concrete\Core\User\User;
 use Gettext\Translations;
 use Loader;
 use Symfony\Component\HttpFoundation\Request;
+use Core;
 
 class FileFolder extends Category
 {
@@ -24,6 +27,7 @@ class FileFolder extends Category
     {
         return '\\Concrete\\Core\\Permission\\Assignment\\FileFolderAssignment';
     }
+
     public function getPermissionObjectKeyCategoryHandle()
     {
         return 'file_folder';
@@ -89,5 +93,24 @@ class FileFolder extends Category
     {
         return false;
     }
+
+    public function addFolderStorageLocation(StorageLocation $sL)
+    {
+        $db = Core::make('database');
+        if(!$this->getFolderStorageLocation()){
+            $db->executeQuery('insert into FileFolderStorageLocations (folderID, storageLocationID) values (?, ?)', [$this->getTreeNodeID(), $sL->getID()]);
+        }
+    }
+
+    public function getFolderStorageLocation()
+    {
+        $db = Core::make('database');
+        $r = $db->executeQuery('select * from FileFolderStorageLocations WHERE folderID=?', [$this->getTreeNodeID()]);
+        if ($r instanceof Statement) {
+            return $r->fetch();
+        }
+        return false;
+    }
+
 
 }
